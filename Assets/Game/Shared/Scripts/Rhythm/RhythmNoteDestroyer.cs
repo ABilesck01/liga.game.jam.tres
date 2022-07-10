@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class RhythmNoteDestroyer : MonoBehaviour
 {
+    public RhythmController controller;
+
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.transform.parent.gameObject);
+        if(other != null)
+        {
+            Destroy(other.transform.parent.gameObject);
+            controller.missHit();
+        }
     }
 }

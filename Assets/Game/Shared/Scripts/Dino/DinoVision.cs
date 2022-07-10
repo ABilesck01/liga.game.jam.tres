@@ -16,6 +16,7 @@ public class DinoVision : MonoBehaviour
         else if(other.CompareTag("entity"))
         {
             DinoBehaviour.hasEntity = true;
+            DinoBehaviour.carControllerInWorld = other.GetComponent<CarController>();
         }
     }
 

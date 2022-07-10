@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 122015651025107429}
   m_Layer: 0
   m_Name: CrossingStreetBlock
-  m_TagString: Untagged
+  m_TagString: chunk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,6 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 122015652317977298}
   chunkManager: {fileID: 0}
+  carSpawner: {fileID: 0}
 --- !u!65 &122015651025107429
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -366,6 +367,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildings:
   - {fileID: 2948701350927905075, guid: 1592d40dbb9588340a7609199955cc02, type: 3}
+  - {fileID: 2948701350927905075, guid: 1000f79e953168449858ff65f324bada, type: 3}
+  - {fileID: 2948701350927905075, guid: 6cb8c8b5423451740a74a5b79f36ed62, type: 3}
+  - {fileID: 2948701350927905075, guid: dedd1891bf5883543b187b6ede201892, type: 3}
 --- !u!4 &9010782306535365414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8988558490435723325, guid: 20144e3e688613e47bdf44892c8804e5, type: 3}
@@ -819,6 +823,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildings:
   - {fileID: 2948701350927905075, guid: 1592d40dbb9588340a7609199955cc02, type: 3}
+  - {fileID: 2948701350927905075, guid: 1000f79e953168449858ff65f324bada, type: 3}
+  - {fileID: 2948701350927905075, guid: 6cb8c8b5423451740a74a5b79f36ed62, type: 3}
+  - {fileID: 2948701350927905075, guid: dedd1891bf5883543b187b6ede201892, type: 3}
 --- !u!4 &9010782306335456460 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8988558490435723325, guid: 20144e3e688613e47bdf44892c8804e5, type: 3}

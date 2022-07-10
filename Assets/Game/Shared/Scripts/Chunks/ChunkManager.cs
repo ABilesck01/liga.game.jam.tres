@@ -51,7 +51,11 @@ public class ChunkManager : MonoBehaviour
         //    Destroy(prevChunk.gameObject);
         //}
         prevChunk = currentChunk;
+        
+        currentChunk?.carSpawner?.SpawnCar();
+        
         currentChunk = nextChunk;
         SpawnChunk();
+
     }
 }
