@@ -33,13 +33,28 @@ public class DinoBehaviour : MonoBehaviour
     {
         RhythmController.onCorrectHit += HandleAction;
         ComboManager.onFeverEnter += handleRage;
-        ComboManager.onFeverEnter += delegate { dinoFire.SetActive(true); };
-        ComboManager.onFeverExit += delegate { dinoFire.SetActive(false); };
+        ComboManager.onFeverEnter += enableFever;
+        ComboManager.onFeverExit += disableFever;
 
         _transform = transform;
+    }
 
-        //RhythmController.onStartGame += handleRage;
-        //handleRage(this, null);
+    private void OnDisable()
+    {
+        RhythmController.onCorrectHit -= HandleAction;
+        ComboManager.onFeverEnter -= handleRage;
+        ComboManager.onFeverEnter -= enableFever;
+        ComboManager.onFeverExit -= disableFever;
+    }
+
+    private void disableFever(object sender, EventArgs e)
+    {
+        dinoFire?.SetActive(false);
+    }
+
+    private void enableFever(object sender, EventArgs e)
+    {
+        dinoFire?.SetActive(true);
     }
 
     private void HandleAction(object sender, EventArgs e)
@@ -75,6 +90,7 @@ public class DinoBehaviour : MonoBehaviour
 
     private void Walk()
     {
+        if(isRaging) return;
         //Vector3 newPos = _transform.position + new Vector3(0, 0, walkAmount);
         //_transform.Translate(new Vector3(0, 0, walkAmount));
         stepsTaken++;
@@ -103,15 +119,15 @@ public class DinoBehaviour : MonoBehaviour
 
     public void handleRage(object sender, EventArgs e)
     {
-        dinoAnimation.PlayTargetAnimation("rage");
-        onRageStarted?.Invoke(this, e);
-        isRaging = true;
         AudioManager.instance.Play("rage");
-        Invoke(nameof(finishedRage), .75f);
+        //dinoAnimation.PlayTargetAnimation("rage");
+        //onRageStarted?.Invoke(this, e);
+        //isRaging = true;
+        //Invoke(nameof(finishedRage), .75f);
     }
     private void finishedRage()
     {
-        onRageFinished?.Invoke(this, null);
-        isRaging = false;
+        //onRageFinished?.Invoke(this, null);
+        //isRaging = false;
     }
 }

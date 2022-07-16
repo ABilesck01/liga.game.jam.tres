@@ -21,7 +21,13 @@ public class AirStrikeController : MonoBehaviour
         RhythmController.onCorrectHit += RhythmController_onCorrectHit;
     }
 
-    private void RhythmController_onCorrectHit(object sender, System.EventArgs e)
+    private void OnDisable()
+    {
+        RhythmController.onMissHit -= RhythmController_onMissHit;
+        RhythmController.onCorrectHit -= RhythmController_onCorrectHit;
+    }
+
+    private void RhythmController_onCorrectHit(object sender, EventArgs e)
     {
         Color tempColor = targetImg.color;
         currentErrors = 0;
@@ -32,6 +38,7 @@ public class AirStrikeController : MonoBehaviour
     private void RhythmController_onMissHit(object sender, System.EventArgs e)
     {
         currentErrors++;
+
         percetage = (float)currentErrors / ErrorsToAirStrike;
         Color tempColor = targetImg.color;
         tempColor.a = percetage;

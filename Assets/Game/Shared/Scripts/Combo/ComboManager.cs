@@ -23,6 +23,15 @@ public class ComboManager : MonoBehaviour
     {
         RhythmController.onCorrectHit += AddCombo;
         RhythmController.onMissHit += ResetCombo;
+
+        dinoBehaviour = FindObjectOfType<DinoBehaviour>();
+        rhythmController = FindObjectOfType<RhythmController>();
+    }
+
+    private void OnDisable()
+    {
+        RhythmController.onCorrectHit -= AddCombo;
+        RhythmController.onMissHit -= ResetCombo;
     }
 
     public void AddCombo(object sender, EventArgs e)
@@ -46,7 +55,7 @@ public class ComboManager : MonoBehaviour
         onFeverExit?.Invoke(this, null);
         isOnFever = false;
         ComboUI.closeWindow();
-        comboCounter = 0;
+        comboCounter = 0;                 
         comboMultiplier = 1;
     }
 

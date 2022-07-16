@@ -10,15 +10,21 @@ public class RhythmNeedle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        controller.NeedleOnPosition = true;
-        controller.currentNote = other.transform.parent.gameObject;
-        GFX.localScale *= 1.1f;
+        if(other.CompareTag("noteBegin"))
+        {
+            controller.NeedleOnPosition = true;
+            controller.currentNote = other.transform.parent.gameObject;
+            GFX.localScale *= 1.1f;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        controller.NeedleOnPosition = false;
-        GFX.localScale /= 1.1f;
+        if (other.CompareTag("noteEnd"))
+        {
+            controller.NeedleOnPosition = false;
+            GFX.localScale /= 1.1f;
+        }
     }
 
 }

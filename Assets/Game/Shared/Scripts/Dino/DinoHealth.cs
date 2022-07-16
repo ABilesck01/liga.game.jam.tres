@@ -22,6 +22,11 @@ public class DinoHealth : MonoBehaviour
         //SetupHearts();
     }
 
+    private void OnDisable()
+    {
+        AirStrikeController.onAirStrike -= onAirStrike;
+    }
+
     private void onAirStrike(object sender, EventArgs e)
     {
         TakeDamage();
@@ -44,14 +49,18 @@ public class DinoHealth : MonoBehaviour
 
     public void TakeDamage()
     {
+        if (isDead) return;
+
         currentHealth--;
+        if(currentHealth < 0)
+            currentHealth = 0;
         hearts[currentHealth].SetActive(false);
         dinoAnimation.PlayTargetAnimation("damage");
         AudioManager.instance.Play("damage");
         if (currentHealth <= 0)
         {
             isDead = true;
-
+            onPlayerDeath?.Invoke(this, null);
             AudioManager.instance.StopAllAudios();
             AudioManager.instance.Play("death");
             AudioManager.instance.Play("heart");

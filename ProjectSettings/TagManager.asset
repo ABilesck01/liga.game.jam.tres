@@ -8,6 +8,8 @@ TagManager:
   - building
   - entity
   - chunk
+  - noteBegin
+  - noteEnd
   layers:
   - Default
   - TransparentFX

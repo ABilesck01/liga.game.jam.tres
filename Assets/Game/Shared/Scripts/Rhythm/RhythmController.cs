@@ -2,13 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class RhythmController : MonoBehaviour
 {
     [Header("Status")]
     public int correctHits = 0;
     public int allHits = 0;
+    [Space]
+    [SerializeField] private TextMeshProUGUI allHitsText;
     [Header("Flags")]
     public bool NeedleOnPosition = false;
 
@@ -33,11 +35,22 @@ public class RhythmController : MonoBehaviour
 
     private List<GameObject> currentNotes;
 
+    private Coroutine playNotesCorroutine;
+
     private void Start()
     {
         MainScreen.onStartGame += PlayGame;
         PlayGame(this, null);
 
+    }
+
+    private void OnDisable()
+    {
+        MainScreen.onStartGame -= PlayGame;
+        DinoHealth.onPlayerDeath -= stopNotes;
+        DinoBehaviour.onRageFinished -= startNotes;
+        DinoBehaviour.onRageStarted -= stopNotes;
+        DinoHealth.onPlayerDeath -= SaveHighScore;
     }
 
     private void PlayGame(object sender, EventArgs e)
@@ -51,25 +64,35 @@ public class RhythmController : MonoBehaviour
 
         noteSpawnTime = 60 / songBPM;
 
-        StartCoroutine(StartSpawningNotes());
+        playNotesCorroutine = StartCoroutine(StartSpawningNotes());
 
         DinoHealth.onPlayerDeath += stopNotes;
         DinoBehaviour.onRageFinished += startNotes;
         DinoBehaviour.onRageStarted += stopNotes;
 
-        DinoHealth.onPlayerDeath += delegate
-        {
-            if (PlayerPrefs.HasKey("highscore"))
-            {
-                int highscore = PlayerPrefs.GetInt("highscore");
-                if (highscore > correctHits)
-                    PlayerPrefs.SetInt("highscore", correctHits);
-            }
-            else
-                PlayerPrefs.SetInt("highscore", correctHits);
-        };
+        DinoHealth.onPlayerDeath += SaveHighScore;
 
         onStartGame?.Invoke(this, null);
+    }
+
+    private void SaveHighScore(object sender, EventArgs e)
+    {
+        if (PlayerPrefs.HasKey("highscore"))
+        {
+            int highscore = PlayerPrefs.GetInt("highscore");
+            Debug.Log($"last highscore{highscore}");
+            if (highscore < correctHits)
+            {
+                PlayerPrefs.SetInt("highscore", correctHits);
+                Debug.Log("highscore upgrated");
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetInt("highscore", correctHits);
+        }
+
+        PlayerPrefs.SetInt("lastGameHits", correctHits);
     }
 
     private void destroyAllNotes()
@@ -88,18 +111,21 @@ public class RhythmController : MonoBehaviour
     {
         if (!canSpawnNotes) return;
 
-        if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) || Input.GetButtonDown("Fire1"))
         {
             if(NeedleOnPosition)
             {
                 correctHits++;
+                allHitsText.text = correctHits.ToString();
                 onCorrectHit?.Invoke(this, null);
                 NeedleOnPosition = false;
             }
             else
             {
                 if(!DinoBehaviour.isRaging)
+                {
                     onMissHit?.Invoke(this, null);
+                }
             }
             allHits++;
             currentNotes.Remove(currentNote);
@@ -116,7 +142,7 @@ public class RhythmController : MonoBehaviour
         AudioManager.instance.Play($"drums{d}");
         while(canSpawnNotes)
         {
-            bool halfBong = (UnityEngine.Random.value < 0.25f);
+            bool halfBong = (UnityEngine.Random.value < 0.125f);
 
             SpawnNote();
             if(halfBong)
@@ -133,11 +159,10 @@ public class RhythmController : MonoBehaviour
         RhythymNoteController noteController = noteGO.GetComponent<RhythymNoteController>();
         noteController.speed = noteSpeed;
         noteGO.transform.SetParent(UI_Parent, false);
-        //AudioManager.instance.Play("singleDrum");
 
     }
 
-    internal void missHit()
+    public void missHit()
     {
         if (DinoBehaviour.isRaging) return;
         allHits++;
@@ -155,7 +180,7 @@ public class RhythmController : MonoBehaviour
         if (canSpawnNotes) return;
 
         canSpawnNotes = true;
-        StartCoroutine(StartSpawningNotes());
+        playNotesCorroutine = StartCoroutine(StartSpawningNotes());
     }
 
 }
