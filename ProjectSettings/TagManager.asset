@@ -10,6 +10,8 @@ TagManager:
   - chunk
   - noteBegin
   - noteEnd
+  - note_R
+  - note_L
   layers:
   - Default
   - TransparentFX

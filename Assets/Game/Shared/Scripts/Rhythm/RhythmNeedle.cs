@@ -12,9 +12,12 @@ public class RhythmNeedle : MonoBehaviour
     {
         if(other.CompareTag("noteBegin"))
         {
+            if(other.transform.parent.CompareTag("note_R"))
+                controller.currentNote_R = other.transform.parent.gameObject;
+            else if (other.transform.parent.CompareTag("note_L"))
+                controller.currentNote_L = other.transform.parent.gameObject;
+
             controller.NeedleOnPosition = true;
-            controller.currentNote = other.transform.parent.gameObject;
-            GFX.localScale *= 1.1f;
         }
     }
 
@@ -23,7 +26,6 @@ public class RhythmNeedle : MonoBehaviour
         if (other.CompareTag("noteEnd"))
         {
             controller.NeedleOnPosition = false;
-            GFX.localScale /= 1.1f;
         }
     }
 
