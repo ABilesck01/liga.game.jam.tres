@@ -5,6 +5,7 @@ using UnityEngine;
 public class RhythmNoteDestroyer : MonoBehaviour
 {
     public RhythmController controller;
+    public string side = "";
 
     private void Start()
     {
@@ -15,8 +16,11 @@ public class RhythmNoteDestroyer : MonoBehaviour
     {
         if(other != null)
         {
-            Destroy(other.transform.parent.gameObject);
-            controller?.missHit();
+            if(other.transform.parent.CompareTag(side))
+            {
+                Destroy(other.transform.parent.gameObject);
+                controller?.missHit();
+            }
         }
     }
 }

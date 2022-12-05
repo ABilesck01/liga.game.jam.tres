@@ -94,7 +94,6 @@ public class DinoBehaviour : MonoBehaviour
         //Vector3 newPos = _transform.position + new Vector3(0, 0, walkAmount);
         //_transform.Translate(new Vector3(0, 0, walkAmount));
         stepsTaken++;
-
         StartCoroutine(walkLerp());
         CameraShake.instance.Shake(.1f, .06f);
         rightStep = !rightStep;

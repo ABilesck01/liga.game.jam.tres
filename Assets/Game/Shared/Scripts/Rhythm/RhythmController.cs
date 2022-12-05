@@ -15,17 +15,21 @@ public class RhythmController : MonoBehaviour
     public bool NeedleOnPosition = false;
 
     public bool canSpawnNotes;
+    [Header("Notes Spawn settings")]
+    public GameObject note_right;
+    public RectTransform noteSpawner_right;
+    public RectTransform noteSpawner_left;
     [Header("Notes settings")]
-    public GameObject note;
-    public RectTransform noteSpawner;
-    public float songBPM;
-    public float noteSpawnTime;
-    public float noteSpeed;
+    //public float songBPM;
+    //public float noteSpeed;
+    [SerializeField] private RhythmSongAsset Song;
     [Space]
     public RectTransform UI_Parent;
     public RhythmNeedle needle;
     [HideInInspector]
-    public GameObject currentNote = null;
+    public GameObject currentNote_R = null;
+    [HideInInspector]
+    public GameObject currentNote_L = null;
 
     private Vector3 needleScale;
 
@@ -33,7 +37,9 @@ public class RhythmController : MonoBehaviour
     public static event EventHandler onMissHit;
     public static event EventHandler onStartGame;
 
-    private List<GameObject> currentNotes;
+    private float noteSpawnTime;
+    private List<GameObject> currentNotes_R;
+    private List<GameObject> currentNotes_L;
 
     private Coroutine playNotesCorroutine;
 
@@ -56,14 +62,15 @@ public class RhythmController : MonoBehaviour
     private void PlayGame(object sender, EventArgs e)
     {
         canSpawnNotes = true;
-        currentNotes = new List<GameObject>();
+        currentNotes_R = new List<GameObject>();
+        currentNotes_L = new List<GameObject>();
 
         AudioManager.instance.Play("environmentSounds");
 
         needleScale = needle.GFX.localScale;
 
-        noteSpawnTime = 60 / songBPM;
-
+        noteSpawnTime = (float)60 / Song.BeatsPerMinute;
+        
         playNotesCorroutine = StartCoroutine(StartSpawningNotes());
 
         DinoHealth.onPlayerDeath += stopNotes;
@@ -80,7 +87,6 @@ public class RhythmController : MonoBehaviour
         if (PlayerPrefs.HasKey("highscore"))
         {
             int highscore = PlayerPrefs.GetInt("highscore");
-            Debug.Log($"last highscore{highscore}");
             if (highscore < correctHits)
             {
                 PlayerPrefs.SetInt("highscore", correctHits);
@@ -97,12 +103,19 @@ public class RhythmController : MonoBehaviour
 
     private void destroyAllNotes()
     {
-        foreach (GameObject item in currentNotes)
+        foreach (GameObject item in currentNotes_R)
         {
             Destroy(item);
         }
-        currentNote = null;
-        currentNotes.Clear();
+
+        foreach (GameObject item in currentNotes_L)
+        {
+            Destroy(item);
+        }
+        currentNote_R = null;
+        currentNote_L = null;
+        currentNotes_R.Clear();
+        currentNotes_L.Clear();
 
     }
 
@@ -116,20 +129,29 @@ public class RhythmController : MonoBehaviour
             if(NeedleOnPosition)
             {
                 correctHits++;
+                float d = Vector3.Distance(currentNote_R.transform.position, currentNote_L.transform.position);
+                if (d < 0.1)
+                    Debug.Log("ÓTIMO");
+                else
+                    Debug.Log("BOM");
+
                 allHitsText.text = correctHits.ToString();
-                onCorrectHit?.Invoke(this, null);
                 NeedleOnPosition = false;
+                onCorrectHit?.Invoke(this, null);
             }
             else
             {
                 if(!DinoBehaviour.isRaging)
                 {
+                    Debug.Log("BOM");
                     onMissHit?.Invoke(this, null);
                 }
             }
             allHits++;
-            currentNotes.Remove(currentNote);
-            Destroy(currentNote);
+            currentNotes_R.Remove(currentNote_R);
+            currentNotes_L.Remove(currentNote_L);
+            Destroy(currentNote_R);
+            Destroy(currentNote_L);
             needle.GFX.localScale = needleScale;
         }
     }
@@ -142,23 +164,36 @@ public class RhythmController : MonoBehaviour
         AudioManager.instance.Play($"drums{d}");
         while(canSpawnNotes)
         {
-            bool halfBong = (UnityEngine.Random.value < 0.125f);
-
             SpawnNote();
-            if(halfBong)
-                yield return half;
-            else
-                yield return s;
+            yield return s;
+            
+            // bool halfBong = (UnityEngine.Random.value < 0.125f);
+            //
+            // SpawnNote();
+            // if(halfBong)
+            //     yield return half;
+            // else
+            //     yield return s;
         }
     }
 
     private void SpawnNote()
     {
-        GameObject noteGO = Instantiate(note, noteSpawner.anchoredPosition, Quaternion.identity);
-        currentNotes.Add(noteGO);
-        RhythymNoteController noteController = noteGO.GetComponent<RhythymNoteController>();
-        noteController.speed = noteSpeed;
-        noteGO.transform.SetParent(UI_Parent, false);
+        GameObject noteGO_R = Instantiate(note_right, noteSpawner_right.anchoredPosition, Quaternion.identity);
+        currentNotes_R.Add(noteGO_R);
+        RhythymNoteController noteController_R = noteGO_R.GetComponent<RhythymNoteController>();
+        noteController_R.speed = Song.NoteSpeed;
+        noteGO_R.name += "_R";
+        noteGO_R.tag = "note_R";
+        noteGO_R.transform.SetParent(UI_Parent, false);
+
+        GameObject noteGO_L = Instantiate(note_right, noteSpawner_left.anchoredPosition, Quaternion.identity);
+        currentNotes_L.Add(noteGO_L);
+        RhythymNoteController noteController_L = noteGO_L.GetComponent<RhythymNoteController>();
+        noteController_L.speed = -Song.NoteSpeed;
+        noteGO_L.name += "_L";
+        noteGO_L.tag = "note_L";
+        noteGO_L.transform.SetParent(UI_Parent, false);
 
     }
 

@@ -25,7 +25,6 @@ public class CarController : MonoBehaviour
     public void ExplodeCar()
     {
         AudioManager.instance.Play($"explosion_car");
-        Debug.Log("carro explosao");
         Rigidbody rb = _transform.GetComponent<Rigidbody>();
         rb.isKinematic = true;
         rb.detectCollisions = false;
