@@ -69,8 +69,8 @@ public class RhythmController : MonoBehaviour
 
         needleScale = needle.GFX.localScale;
 
-        noteSpawnTime = 60 / Song.BeatsPerMinute;
-
+        noteSpawnTime = (float)60 / Song.BeatsPerMinute;
+        
         playNotesCorroutine = StartCoroutine(StartSpawningNotes());
 
         DinoHealth.onPlayerDeath += stopNotes;
@@ -164,13 +164,16 @@ public class RhythmController : MonoBehaviour
         AudioManager.instance.Play($"drums{d}");
         while(canSpawnNotes)
         {
-            bool halfBong = (UnityEngine.Random.value < 0.125f);
-
             SpawnNote();
-            if(halfBong)
-                yield return half;
-            else
-                yield return s;
+            yield return s;
+            
+            // bool halfBong = (UnityEngine.Random.value < 0.125f);
+            //
+            // SpawnNote();
+            // if(halfBong)
+            //     yield return half;
+            // else
+            //     yield return s;
         }
     }
 
