@@ -43,20 +43,27 @@ public class RhythmController : MonoBehaviour
 
     private Coroutine playNotesCorroutine;
 
-    private void Start()
-    {
-        MainScreen.onStartGame += PlayGame;
-        PlayGame(this, null);
 
+    private void OnEnable()
+    {
+        currentNotes_R = new List<GameObject>();
+        currentNotes_L = new List<GameObject>();
+
+        MainScreen.OnStartGame += PlayGame;
+        GameOverMenu.OnAdSuccess += PlayGame;
+        DinoHealth.OnPlayerDeath += stopNotes;
+        DinoBehaviour.onRageFinished += startNotes;
+        DinoBehaviour.onRageStarted += stopNotes;
+        DinoHealth.OnPlayerDeath += SaveHighScore;
     }
 
     private void OnDisable()
     {
-        MainScreen.onStartGame -= PlayGame;
-        DinoHealth.onPlayerDeath -= stopNotes;
+        MainScreen.OnStartGame -= PlayGame;
+        DinoHealth.OnPlayerDeath -= stopNotes;
         DinoBehaviour.onRageFinished -= startNotes;
         DinoBehaviour.onRageStarted -= stopNotes;
-        DinoHealth.onPlayerDeath -= SaveHighScore;
+        DinoHealth.OnPlayerDeath -= SaveHighScore;
     }
 
     private void PlayGame(object sender, EventArgs e)
@@ -67,17 +74,17 @@ public class RhythmController : MonoBehaviour
 
         AudioManager.instance.Play("environmentSounds");
 
-        needleScale = needle.GFX.localScale;
+        //needleScale = needle.GFX.localScale;
 
         noteSpawnTime = (float)60 / Song.BeatsPerMinute;
         
         playNotesCorroutine = StartCoroutine(StartSpawningNotes());
 
-        DinoHealth.onPlayerDeath += stopNotes;
-        DinoBehaviour.onRageFinished += startNotes;
-        DinoBehaviour.onRageStarted += stopNotes;
+        //DinoHealth.OnPlayerDeath += stopNotes;
+        //DinoBehaviour.onRageFinished += startNotes;
+        //DinoBehaviour.onRageStarted += stopNotes;
 
-        DinoHealth.onPlayerDeath += SaveHighScore;
+        //DinoHealth.OnPlayerDeath += SaveHighScore;
 
         onStartGame?.Invoke(this, null);
     }
@@ -129,11 +136,16 @@ public class RhythmController : MonoBehaviour
             if(NeedleOnPosition)
             {
                 correctHits++;
-                float d = Vector3.Distance(currentNote_R.transform.position, currentNote_L.transform.position);
-                if (d < 0.1)
-                    Debug.Log("ÓTIMO");
-                else
-                    Debug.Log("BOM");
+
+                try
+                {
+                    float d = Vector3.Distance(currentNote_R.transform.position, currentNote_L.transform.position);
+                    if (d < 0.1)
+                        Debug.Log("ÓTIMO");
+                    else
+                        Debug.Log("BOM");
+                }
+                catch (Exception) {}
 
                 allHitsText.text = correctHits.ToString();
                 NeedleOnPosition = false;
@@ -152,7 +164,7 @@ public class RhythmController : MonoBehaviour
             currentNotes_L.Remove(currentNote_L);
             Destroy(currentNote_R);
             Destroy(currentNote_L);
-            needle.GFX.localScale = needleScale;
+            //needle.GFX.localScale = needleScale;
         }
     }
     

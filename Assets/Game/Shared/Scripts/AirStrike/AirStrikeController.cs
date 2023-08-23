@@ -14,8 +14,7 @@ public class AirStrikeController : MonoBehaviour
 
     public static EventHandler onAirStrike;
 
-
-    private void Start()
+    private void OnEnable()
     {
         RhythmController.onMissHit += RhythmController_onMissHit;
         RhythmController.onCorrectHit += RhythmController_onCorrectHit;

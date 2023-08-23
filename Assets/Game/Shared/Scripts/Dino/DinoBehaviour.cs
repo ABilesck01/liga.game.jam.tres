@@ -78,7 +78,7 @@ public class DinoBehaviour : MonoBehaviour
 
     private void Update()
     {
-        dinoAnimation.setIdleState(hasBuilding);
+        dinoAnimation.SetIdleState(hasBuilding);
     }
 
     private void DestroyBuilding()

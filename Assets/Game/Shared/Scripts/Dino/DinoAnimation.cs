@@ -6,12 +6,29 @@ public class DinoAnimation : MonoBehaviour
 {
     public Animator animator;
 
+    private void OnEnable()
+    {
+        MainScreen.OnStartGame += MainScreen_OnStartGame;
+        GameOverMenu.OnAdSuccess += MainScreen_OnStartGame;
+    }
+
+    private void OnDisable()
+    {
+        MainScreen.OnStartGame -= MainScreen_OnStartGame;
+        GameOverMenu.OnAdSuccess -= MainScreen_OnStartGame;
+    }
+
+    private void MainScreen_OnStartGame(object sender, System.EventArgs e)
+    {
+        PlayTargetAnimation("intro");
+    }
+
     public void PlayTargetAnimation(string targetAnim)
     {
         animator.CrossFade(targetAnim, 0.1f);
     }
 
-    public void setIdleState(bool isAttacking)
+    public void SetIdleState(bool isAttacking)
     { 
         if (isAttacking)
         {

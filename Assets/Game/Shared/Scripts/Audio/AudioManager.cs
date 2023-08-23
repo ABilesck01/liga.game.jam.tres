@@ -28,6 +28,11 @@ public class AudioManager : MonoBehaviour
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
 
+        if(s == null)
+        {
+            return;
+        }
+
         if(s.source.isPlaying)
             s.source.Stop();
         if(s.variablePitch)
@@ -48,6 +53,6 @@ public class AudioManager : MonoBehaviour
     public void StopAllAudios()
     {
         foreach (Sound s in sounds)
-            s.source.Stop();
+            s.source?.Stop();
     }
 }

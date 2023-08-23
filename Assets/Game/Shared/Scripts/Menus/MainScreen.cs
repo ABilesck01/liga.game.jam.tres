@@ -7,60 +7,28 @@ using TMPro;
 
 public class MainScreen : MonoBehaviour
 {
-    public TextMeshProUGUI txtHighscore;
-    public TextMeshProUGUI txtLastGamePoints;
-    public TextMeshProUGUI txtHash;
-    public bool ShowLastPoints;
-    public static EventHandler onStartGame;
-    public string scene;
-    public string song;
-    
+    public static string SCENE_NAME = "menu";
+
+    [SerializeField] private string song;
+    [Header("Buttons")]
+    [SerializeField] private Button btnPlay;
+
+    public static event EventHandler OnStartGame;
+
+    private void Awake()
+    {
+        btnPlay.onClick.AddListener(BtnPlayGame);
+    }
+
     private void Start()
     {
         AudioManager.instance.Play(song);
-
-        if (PlayerPrefs.HasKey("highscore"))
-        {
-            Debug.Log("has highscore");
-            txtHighscore.text = $"Highscore: {PlayerPrefs.GetInt("highscore")}";
-        }
-        if (PlayerPrefs.HasKey("lastGameHits"))
-        {
-            if(ShowLastPoints)
-            {
-                txtLastGamePoints.text = $"This game: {PlayerPrefs.GetInt("lastGameHits")}";
-                generateHash();
-                resolveHash();
-            }
-        }
     }
 
-    private void Update()
+    public void BtnPlayGame()
     {
-        if(Input.GetButtonDown("Fire1"))
-        {
-            btnPlayGame();
-        }
-    }
-
-    private void generateHash()
-    {
-        int increment = 2934;
-        int points = PlayerPrefs.GetInt("lastGameHits") * increment;
-        Debug.Log(points);
-        string myHex = points.ToString("X");  // Gives you hexadecimal
-        txtHash.text = myHex;
-    }
-
-    private void resolveHash()
-    {
-        int increment = 2934;
-        int points = Convert.ToInt32(txtHash.text, 16);
-        Debug.Log(points / increment);
-    }
-
-    public void btnPlayGame()
-    {
-        SceneManager.LoadScene(scene);
+        //SceneManager.LoadScene(scene);
+        SceneManager.UnloadSceneAsync(SCENE_NAME);
+        OnStartGame?.Invoke(this, EventArgs.Empty);
     }
 }

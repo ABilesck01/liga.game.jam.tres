@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DinoHealth : MonoBehaviour
 {
@@ -13,7 +14,10 @@ public class DinoHealth : MonoBehaviour
     [Space]
     public DinoAnimation dinoAnimation;
 
-    public static EventHandler onPlayerDeath;
+
+    public static bool hasUsedAd = false;
+
+    public static EventHandler OnPlayerDeath;
 
     private void Start()
     {
@@ -22,9 +26,15 @@ public class DinoHealth : MonoBehaviour
         //SetupHearts();
     }
 
+    private void OnEnable()
+    {
+        GameOverMenu.OnAdSuccess += GameOverMenu_OnAdSuccess;
+    }
+
     private void OnDisable()
     {
         AirStrikeController.onAirStrike -= onAirStrike;
+        GameOverMenu.OnAdSuccess -= GameOverMenu_OnAdSuccess;
     }
 
     private void onAirStrike(object sender, EventArgs e)
@@ -36,15 +46,16 @@ public class DinoHealth : MonoBehaviour
     {
         for (int i = 0; i < MaxHealth; i++)
         {
-            if (i <= currentHealth)
-            {
-                hearts[i].SetActive(true);
-            }
-            else
-            {
-                hearts[i].SetActive(true);
-            }
+            hearts[i].SetActive(i <= currentHealth - 1);
         }
+    }
+
+    private void GameOverMenu_OnAdSuccess(object sender, EventArgs e)
+    {
+        hasUsedAd = true;
+        currentHealth = 1;
+        isDead = false;
+        SetupHearts();
     }
 
     public void TakeDamage()
@@ -60,10 +71,10 @@ public class DinoHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             isDead = true;
-            onPlayerDeath?.Invoke(this, null);
-            AudioManager.instance.StopAllAudios();
-            AudioManager.instance.Play("death");
-            AudioManager.instance.Play("heart");
+            OnPlayerDeath?.Invoke(this, null);
+            //AudioManager.instance.StopAllAudios();
+            //AudioManager.instance.Play("death");
+            //AudioManager.instance.Play("heart");
             dinoAnimation.PlayTargetAnimation("die");
             Invoke(nameof(LoadDeathScreen), 3f);
         }
@@ -71,6 +82,12 @@ public class DinoHealth : MonoBehaviour
 
     public void LoadDeathScreen()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Death");
+        if (!hasUsedAd)
+            SceneManager.LoadScene("Death", LoadSceneMode.Additive);
+        else
+        {
+            SceneManager.LoadScene("Game");
+            hasUsedAd = false;
+        }
     }
 }
