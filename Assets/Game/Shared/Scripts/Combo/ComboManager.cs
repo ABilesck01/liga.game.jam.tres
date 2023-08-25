@@ -21,8 +21,8 @@ public class ComboManager : MonoBehaviour
 
     public void Start()
     {
-        RhythmController.onCorrectHit += AddCombo;
-        RhythmController.onMissHit += ResetCombo;
+        RhythmController.OnCorrectHit += AddCombo;
+        RhythmController.OnMissHit += ResetCombo;
 
         dinoBehaviour = FindObjectOfType<DinoBehaviour>();
         rhythmController = FindObjectOfType<RhythmController>();
@@ -30,8 +30,8 @@ public class ComboManager : MonoBehaviour
 
     private void OnDisable()
     {
-        RhythmController.onCorrectHit -= AddCombo;
-        RhythmController.onMissHit -= ResetCombo;
+        RhythmController.OnCorrectHit -= AddCombo;
+        RhythmController.OnMissHit -= ResetCombo;
     }
 
     public void AddCombo(object sender, EventArgs e)

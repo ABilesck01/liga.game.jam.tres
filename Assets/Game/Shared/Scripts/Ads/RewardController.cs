@@ -22,7 +22,7 @@ public class RewardController : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
     {
         if (!placementId.Equals(adUnit)) return;
 
-        Debug.Log("add loaded", this);
+        Debug.Log("Rewarded ad loaded", this);
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
@@ -37,20 +37,22 @@ public class RewardController : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
 
     public void OnUnityAdsShowClick(string placementId)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
         if (!placementId.Equals(adUnit)) return;
 
-        if(!showCompletionState.Equals(UnityAdsCompletionState.COMPLETED))
+        Debug.Log(showCompletionState);
+
+        if(!showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             OnSkipReward?.Invoke(this, EventArgs.Empty);
             return;
         }
 
-        Debug.Log("Interstitial complete", this);
+        Debug.Log("Rewarded complete", this);
         OnGetReward?.Invoke(this, EventArgs.Empty);
     }
 
@@ -61,7 +63,7 @@ public class RewardController : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
 
     public void OnUnityAdsShowStart(string placementId)
     {
-        Debug.Log("Interstitial start", this);
+        Debug.Log("Rewarded start", this);
     }
 
     private void Awake()

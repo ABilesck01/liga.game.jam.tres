@@ -11,6 +11,7 @@ public class GameOverMenu : MonoBehaviour
     [SerializeField] private RewardController rewardController;
 
     public static event EventHandler OnAdSuccess;
+    public static event EventHandler OnGameFinished;
 
     private void Awake()
     {
@@ -28,12 +29,14 @@ public class GameOverMenu : MonoBehaviour
 
     private void RewardController_OnGetReward(object sender, EventArgs e)
     {
+        Debug.Log("ad success");
         SceneManager.UnloadSceneAsync("Death");
         OnAdSuccess?.Invoke(this, EventArgs.Empty);
     }
 
     private void RewardController_OnSkipReward(object sender, EventArgs e)
     {
+        Debug.Log("ad skiped");
         DinoHealth.hasUsedAd = true;
         OnBtnCloseClick();
     }
@@ -45,8 +48,15 @@ public class GameOverMenu : MonoBehaviour
 
     private void OnBtnCloseClick()
     {
+        GameFinish();
         SceneManager.UnloadSceneAsync("Death");
         SceneManager.LoadScene("Game");
+    }
+
+    public static void GameFinish()
+    {
+        Debug.Log("game finished");
+        OnGameFinished?.Invoke(null, EventArgs.Empty);
     }
 
 }

@@ -16,14 +16,14 @@ public class AirStrikeController : MonoBehaviour
 
     private void OnEnable()
     {
-        RhythmController.onMissHit += RhythmController_onMissHit;
-        RhythmController.onCorrectHit += RhythmController_onCorrectHit;
+        RhythmController.OnMissHit += RhythmController_onMissHit;
+        RhythmController.OnCorrectHit += RhythmController_onCorrectHit;
     }
 
     private void OnDisable()
     {
-        RhythmController.onMissHit -= RhythmController_onMissHit;
-        RhythmController.onCorrectHit -= RhythmController_onCorrectHit;
+        RhythmController.OnMissHit -= RhythmController_onMissHit;
+        RhythmController.OnCorrectHit -= RhythmController_onCorrectHit;
     }
 
     private void RhythmController_onCorrectHit(object sender, EventArgs e)

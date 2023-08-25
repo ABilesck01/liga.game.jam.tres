@@ -76,7 +76,7 @@ public class DinoHealth : MonoBehaviour
             //AudioManager.instance.Play("death");
             //AudioManager.instance.Play("heart");
             dinoAnimation.PlayTargetAnimation("die");
-            Invoke(nameof(LoadDeathScreen), 3f);
+            Invoke(nameof(LoadDeathScreen), 2.5f);
         }
     }
 
@@ -88,6 +88,7 @@ public class DinoHealth : MonoBehaviour
         {
             SceneManager.LoadScene("Game");
             hasUsedAd = false;
+            GameOverMenu.GameFinish();
         }
     }
 }

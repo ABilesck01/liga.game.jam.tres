@@ -31,7 +31,7 @@ public class DinoBehaviour : MonoBehaviour
 
     private void Start()
     {
-        RhythmController.onCorrectHit += HandleAction;
+        RhythmController.OnCorrectHit += HandleAction;
         ComboManager.onFeverEnter += handleRage;
         ComboManager.onFeverEnter += enableFever;
         ComboManager.onFeverExit += disableFever;
@@ -41,7 +41,7 @@ public class DinoBehaviour : MonoBehaviour
 
     private void OnDisable()
     {
-        RhythmController.onCorrectHit -= HandleAction;
+        RhythmController.OnCorrectHit -= HandleAction;
         ComboManager.onFeverEnter -= handleRage;
         ComboManager.onFeverEnter -= enableFever;
         ComboManager.onFeverExit -= disableFever;

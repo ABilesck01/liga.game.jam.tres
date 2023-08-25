@@ -33,9 +33,9 @@ public class RhythmController : MonoBehaviour
 
     private Vector3 needleScale;
 
-    public static event EventHandler onCorrectHit;
-    public static event EventHandler onMissHit;
-    public static event EventHandler onStartGame;
+    public static event EventHandler OnCorrectHit;
+    public static event EventHandler OnMissHit;
+    public static event EventHandler OnPlayGame;
 
     private float noteSpawnTime;
     private List<GameObject> currentNotes_R;
@@ -86,7 +86,7 @@ public class RhythmController : MonoBehaviour
 
         //DinoHealth.OnPlayerDeath += SaveHighScore;
 
-        onStartGame?.Invoke(this, null);
+        OnPlayGame?.Invoke(this, null);
     }
 
     private void SaveHighScore(object sender, EventArgs e)
@@ -149,14 +149,14 @@ public class RhythmController : MonoBehaviour
 
                 allHitsText.text = correctHits.ToString();
                 NeedleOnPosition = false;
-                onCorrectHit?.Invoke(this, null);
+                OnCorrectHit?.Invoke(this, null);
             }
             else
             {
                 if(!DinoBehaviour.isRaging)
                 {
                     Debug.Log("BOM");
-                    onMissHit?.Invoke(this, null);
+                    OnMissHit?.Invoke(this, null);
                 }
             }
             allHits++;
@@ -213,7 +213,7 @@ public class RhythmController : MonoBehaviour
     {
         if (DinoBehaviour.isRaging) return;
         allHits++;
-        onMissHit?.Invoke(this, null);
+        OnMissHit?.Invoke(this, null);
     }
 
     private void stopNotes(object sender, EventArgs e)

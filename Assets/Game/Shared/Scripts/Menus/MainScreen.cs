@@ -12,12 +12,23 @@ public class MainScreen : MonoBehaviour
     [SerializeField] private string song;
     [Header("Buttons")]
     [SerializeField] private Button btnPlay;
+    [SerializeField] private Button btnLeaderboard;
+    [SerializeField] private Button btnOptions;
 
     public static event EventHandler OnStartGame;
 
     private void Awake()
     {
         btnPlay.onClick.AddListener(BtnPlayGame);
+        btnLeaderboard.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene(LeaderboardController.SceneName, LoadSceneMode.Additive);
+        });
+
+        btnOptions.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene(OptionsController.SceneName, LoadSceneMode.Additive);
+        });
     }
 
     private void Start()
