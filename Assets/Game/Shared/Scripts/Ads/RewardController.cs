@@ -8,7 +8,7 @@ public class RewardController : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
 {
     [SerializeField] private string androidAdUnit;
 
-    private string adUnit;
+    private static string adUnit;
 
     public event EventHandler OnSkipReward;
     public event EventHandler OnGetReward;

@@ -229,7 +229,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &220812954
 MonoBehaviour:
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   androidId: 5386679
-  isTestMode: 1
+  isTestMode: 0
 --- !u!1 &226663584
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +524,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &716458016
 MonoBehaviour:
@@ -538,6 +538,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e00b6b41e86b8384fa42aa54fdf65c05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadCircle: {fileID: 149575123}
+  axis: {x: 0, y: 0, z: -720}
+  audioMixer: {fileID: 24100000, guid: b440d547bfa34c040b6378a133c1878b, type: 2}
+  slider: {fileID: 2007007315}
 --- !u!1 &749916589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,7 +1161,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

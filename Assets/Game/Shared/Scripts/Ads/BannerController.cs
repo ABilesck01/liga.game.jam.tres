@@ -9,7 +9,7 @@ public class BannerController : MonoBehaviour
     [SerializeField] private string androidAdUnit;
     [SerializeField] private BannerPosition bannerPosition;
 
-    private string adUnit;
+    private static string adUnit;
 
     private void Start()
     {
@@ -17,10 +17,10 @@ public class BannerController : MonoBehaviour
 
         Advertisement.Banner.SetPosition(bannerPosition);
 
-        LoadBanner();
+        //LoadBanner();
     }
 
-    private void LoadBanner()
+    public static void LoadBanner()
     {
         BannerLoadOptions bannerOptions = new BannerLoadOptions
         {
@@ -31,17 +31,17 @@ public class BannerController : MonoBehaviour
         Advertisement.Banner.Load(adUnit, bannerOptions);
     }
 
-    private void OnBannerLoadError(string message)
+    private static void OnBannerLoadError(string message)
     {
         Debug.LogError(message);
     }
 
-    private void OnBannerLoad()
+    private static void OnBannerLoad()
     {
         ShowBanner();
     }
 
-    private void ShowBanner()
+    private static void ShowBanner()
     {
         BannerOptions bannerOptions = new BannerOptions
         {
@@ -53,16 +53,22 @@ public class BannerController : MonoBehaviour
         Advertisement.Banner.Show(adUnit, bannerOptions);
     }
 
-    private void OnHideBanner()
+    private static void OnHideBanner()
     {
         Advertisement.Banner.Hide();
     }
 
-    private void OnClickBanner()
+    private static void OnClickBanner()
     {
     }
 
-    private void OnShowBanner()
+    public static void HideBanner()
+    {
+        Debug.Log("hide banner");
+        Advertisement.Banner.Hide(true);
+    }
+
+    private static void OnShowBanner()
     {
     }
 }

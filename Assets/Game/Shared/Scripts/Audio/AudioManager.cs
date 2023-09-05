@@ -6,15 +6,25 @@ using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
-    public Sound[] sounds;
+    [SerializeField] private SoundController controller;
+    //public Sound[] sounds;
 
     public static AudioManager instance;
 
     private void Awake()
     {
-        instance = this;
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
 
-        foreach (Sound item in sounds)
+
+        foreach (Sound item in controller.sounds)
         {
             item.source = gameObject.AddComponent<AudioSource>();
             item.source.clip = item.clip;
@@ -24,9 +34,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void Play(string name)
+    public void Play(string name, bool stopSounds = false)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if(stopSounds)
+            StopAllAudios();
+
+        Sound s = Array.Find(controller.sounds, sound => sound.name == name);
 
         if(s == null)
         {
@@ -45,14 +58,14 @@ public class AudioManager : MonoBehaviour
 
     public void Stop(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(controller.sounds, sound => sound.name == name);
         if (s != null)
             s.source.Stop();
     }
 
     public void StopAllAudios()
     {
-        foreach (Sound s in sounds)
+        foreach (Sound s in controller.sounds)
             s.source?.Stop();
     }
 }

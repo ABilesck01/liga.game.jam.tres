@@ -59,6 +59,7 @@ public class RhythmController : MonoBehaviour
 
     private void OnDisable()
     {
+        Debug.Log("on disable", this);
         MainScreen.OnStartGame -= PlayGame;
         DinoHealth.OnPlayerDeath -= stopNotes;
         DinoBehaviour.onRageFinished -= startNotes;
@@ -68,25 +69,33 @@ public class RhythmController : MonoBehaviour
 
     private void PlayGame(object sender, EventArgs e)
     {
-        canSpawnNotes = true;
-        currentNotes_R = new List<GameObject>();
-        currentNotes_L = new List<GameObject>();
+        //StopAllCoroutines();
+        try
+        {
+            canSpawnNotes = true;
+            currentNotes_R = new List<GameObject>();
+            currentNotes_L = new List<GameObject>();
 
-        AudioManager.instance.Play("environmentSounds");
+            AudioManager.instance.Play("environmentSounds", true);
 
-        //needleScale = needle.GFX.localScale;
+            //needleScale = needle.GFX.localScale;
 
-        noteSpawnTime = (float)60 / Song.BeatsPerMinute;
-        
-        playNotesCorroutine = StartCoroutine(StartSpawningNotes());
+            noteSpawnTime = (float)60 / Song.BeatsPerMinute;
 
-        //DinoHealth.OnPlayerDeath += stopNotes;
-        //DinoBehaviour.onRageFinished += startNotes;
-        //DinoBehaviour.onRageStarted += stopNotes;
+            playNotesCorroutine = StartCoroutine(StartSpawningNotes());
 
-        //DinoHealth.OnPlayerDeath += SaveHighScore;
+            //DinoHealth.OnPlayerDeath += stopNotes;
+            //DinoBehaviour.onRageFinished += startNotes;
+            //DinoBehaviour.onRageStarted += stopNotes;
 
-        OnPlayGame?.Invoke(this, null);
+            //DinoHealth.OnPlayerDeath += SaveHighScore;
+
+            OnPlayGame?.Invoke(this, null);
+        }
+        catch (Exception ex)
+        {
+            //Debug.LogError(ex.Message);
+        }
     }
 
     private void SaveHighScore(object sender, EventArgs e)
@@ -106,6 +115,9 @@ public class RhythmController : MonoBehaviour
         }
 
         PlayerPrefs.SetInt("lastGameHits", correctHits);
+
+        stopNotes(null, null);
+        StopAllCoroutines();
     }
 
     private void destroyAllNotes()
@@ -119,10 +131,10 @@ public class RhythmController : MonoBehaviour
         {
             Destroy(item);
         }
-        currentNote_R = null;
-        currentNote_L = null;
         currentNotes_R.Clear();
         currentNotes_L.Clear();
+        currentNote_R = null;
+        currentNote_L = null;
 
     }
 

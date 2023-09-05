@@ -8,6 +8,18 @@ public class CameraShake : MonoBehaviour
     private Transform _transform;
     private bool _isPlaying = false;
 
+    private static float intensity;
+
+    public static float Intensity
+    {
+        get => intensity;
+        set
+        {
+            intensity = Mathf.Clamp01(value);
+
+        } 
+    }
+
     private void Start()
     {
         _transform = transform;
@@ -31,8 +43,8 @@ public class CameraShake : MonoBehaviour
 
         while (timeElapsed < duration)
         {
-            float x = Random.Range(-1f, 1f) * mag * ComboManager.comboMultiplier;
-            float y = Random.Range(-1f, 1f) * mag * ComboManager.comboMultiplier;
+            float x = Random.Range(-1f, 1f) * mag * ComboManager.comboMultiplier * intensity;
+            float y = Random.Range(-1f, 1f) * mag * ComboManager.comboMultiplier * intensity;
 
             _transform.localPosition = new Vector3(x, y, originalPosition.z);
 

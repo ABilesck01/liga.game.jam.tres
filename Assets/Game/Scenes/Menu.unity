@@ -1427,6 +1427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   song: menu
+  banner: {fileID: 936194545}
   btnPlay: {fileID: 556755252}
   btnLeaderboard: {fileID: 2083816915}
   btnOptions: {fileID: 1090047381}
@@ -1457,7 +1458,7 @@ GameObject:
   - component: {fileID: 1348501012}
   - component: {fileID: 1348501011}
   - component: {fileID: 1348501010}
-  - component: {fileID: 1348501015}
+  - component: {fileID: 1348501016}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1548,26 +1549,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1348501015
-MonoBehaviour:
+--- !u!95 &1348501016
+Animator:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348501009}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23bfcd4b961b65c4ca1355795dc850d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: menu
-    clip: {fileID: 8300000, guid: f8ce1439f2bf4524fae7136b2406740a, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-    variablePitch: 0
-    source: {fileID: 0}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5752bb854e1a0354fa29cfd61394ecc5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1377099381
 GameObject:
   m_ObjectHideFlags: 0

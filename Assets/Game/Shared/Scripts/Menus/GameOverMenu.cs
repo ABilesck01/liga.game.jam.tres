@@ -21,6 +21,11 @@ public class GameOverMenu : MonoBehaviour
         rewardController.OnSkipReward += RewardController_OnSkipReward;
     }
 
+    private void Start()
+    {
+        AudioManager.instance.Play("death", true);
+    }
+
     private void OnDisable()
     {
         rewardController.OnGetReward -= RewardController_OnGetReward;
@@ -29,9 +34,8 @@ public class GameOverMenu : MonoBehaviour
 
     private void RewardController_OnGetReward(object sender, EventArgs e)
     {
-        Debug.Log("ad success");
-        SceneManager.UnloadSceneAsync("Death");
         OnAdSuccess?.Invoke(this, EventArgs.Empty);
+        SceneManager.UnloadSceneAsync("Death");
     }
 
     private void RewardController_OnSkipReward(object sender, EventArgs e)
@@ -43,6 +47,7 @@ public class GameOverMenu : MonoBehaviour
 
     private void OnBtnAdContinueClick()
     {
+        AudioManager.instance.StopAllAudios();
         rewardController.ShowAd();
     }
 
