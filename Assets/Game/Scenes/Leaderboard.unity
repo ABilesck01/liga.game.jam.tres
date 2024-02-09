@@ -277,6 +277,7 @@ MonoBehaviour:
   leaderboardItem: {fileID: 6499223420153066797, guid: a27fa2eb2b4c07a4184a101dac97ec04, type: 3}
   container: {fileID: 991036732}
   btnClose: {fileID: 280192076}
+  interstitialController: {fileID: 1264816038}
 --- !u!4 &736097795
 Transform:
   m_ObjectHideFlags: 0
@@ -525,6 +526,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188381362}
   m_CullTransparentMesh: 1
+--- !u!1 &1264816037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1264816039}
+  - component: {fileID: 1264816038}
+  m_Layer: 0
+  m_Name: Interstitial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1264816038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264816037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5996f3840143040a7accf012992a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  androidAdUnit: Interstitial_Android
+--- !u!4 &1264816039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264816037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1359003423
 GameObject:
   m_ObjectHideFlags: 0

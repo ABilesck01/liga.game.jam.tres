@@ -12,9 +12,14 @@ public class LeaderboardController : MonoBehaviour
     [SerializeField] private Transform container;
     [Space]
     [SerializeField] private Button btnClose;
+    [Space]
+    [SerializeField] private InterstitialController interstitialController;
 
     private void Start()
     {
+        if (Random.value < 0.33f)
+            interstitialController.ShowAd();
+
         btnClose.onClick.AddListener(() =>
         {
             SceneManager.UnloadSceneAsync(SceneName);

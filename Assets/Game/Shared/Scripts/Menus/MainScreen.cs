@@ -33,13 +33,13 @@ public class MainScreen : MonoBehaviour
 
     private void Start()
     {
-        BannerController.LoadBanner();
+        //BannerController.LoadBanner();
         AudioManager.instance.Play(song, true);
     }
 
     public void BtnPlayGame()
     {
-        BannerController.HideBanner();
+        //BannerController.HideBanner();
         SceneManager.UnloadSceneAsync(SCENE_NAME);
         OnStartGame?.Invoke(this, EventArgs.Empty);
     }
