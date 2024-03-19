@@ -577,3 +577,7 @@ MonoBehaviour:
   txtPosition: {fileID: 800959529007583707}
   txtUser: {fileID: 800959530065440087}
   txtPoints: {fileID: 800959529388051967}
+  background: {fileID: 800959530330001474}
+  firstPositionBg: {fileID: 21300000, guid: a994b3474ae8f4078bfd4adde0b849e7, type: 3}
+  secondPositionBg: {fileID: 21300000, guid: 14d5229dd47ba48c2b65863aad6a3985, type: 3}
+  thirdPositionBg: {fileID: 21300000, guid: 35dfad9459aa14db6b015fc33944645f, type: 3}

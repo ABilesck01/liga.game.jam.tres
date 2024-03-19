@@ -65,7 +65,7 @@ public class BannerController : MonoBehaviour
     public static void HideBanner()
     {
         Debug.Log("hide banner");
-        Advertisement.Banner.Hide(true);
+        Advertisement.Banner.Hide(false);
     }
 
     private static void OnShowBanner()

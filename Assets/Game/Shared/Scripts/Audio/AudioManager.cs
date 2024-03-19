@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private SoundController controller;
+    [SerializeField] private AudioMixerGroup mixerGroup;
     //public Sound[] sounds;
 
     public static AudioManager instance;
@@ -31,6 +33,7 @@ public class AudioManager : MonoBehaviour
             item.source.volume = item.volume;
             item.source.pitch = item.pitch;
             item.source.loop = item.loop;
+            item.source.outputAudioMixerGroup = mixerGroup;
         }
     }
 

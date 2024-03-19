@@ -31,7 +31,7 @@ public class InterstitialController : MonoBehaviour, IUnityAdsLoadListener, IUni
 
     public void OnUnityAdsShowClick(string placementId)
     {
-        throw new System.NotImplementedException();
+
     }
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)

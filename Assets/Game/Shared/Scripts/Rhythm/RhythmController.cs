@@ -161,6 +161,7 @@ public class RhythmController : MonoBehaviour
 
                 allHitsText.text = correctHits.ToString();
                 NeedleOnPosition = false;
+                noteSpawnTime *= 0.98f;
                 OnCorrectHit?.Invoke(this, null);
             }
             else
@@ -168,6 +169,7 @@ public class RhythmController : MonoBehaviour
                 if(!DinoBehaviour.isRaging)
                 {
                     Debug.Log("BOM");
+                    noteSpawnTime = (float)60 / Song.BeatsPerMinute;
                     OnMissHit?.Invoke(this, null);
                 }
             }
@@ -188,16 +190,16 @@ public class RhythmController : MonoBehaviour
         AudioManager.instance.Play($"drums{d}");
         while(canSpawnNotes)
         {
+            //SpawnNote();
+            //yield return s;
+
+            bool halfBong = (UnityEngine.Random.value < 0.25f);
+
             SpawnNote();
-            yield return s;
-            
-            // bool halfBong = (UnityEngine.Random.value < 0.125f);
-            //
-            // SpawnNote();
-            // if(halfBong)
-            //     yield return half;
-            // else
-            //     yield return s;
+            if (halfBong)
+                yield return half;
+            else
+                yield return s;
         }
     }
 

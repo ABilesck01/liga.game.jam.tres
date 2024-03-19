@@ -1408,6 +1408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 11400000, guid: 3472b15dfbf514841a286620df1fb46a, type: 2}
+  mixerGroup: {fileID: 24300002, guid: b440d547bfa34c040b6378a133c1878b, type: 2}
 --- !u!1 &511505767
 GameObject:
   m_ObjectHideFlags: 0
@@ -5190,7 +5191,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   song: 
-  banner: {fileID: 0}
   btnPlay: {fileID: 0}
   btnLeaderboard: {fileID: 0}
   btnOptions: {fileID: 0}
