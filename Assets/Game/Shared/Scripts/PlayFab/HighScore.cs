@@ -53,10 +53,15 @@ public class HighScore : MonoBehaviour
         var request = new UpdatePlayerStatisticsRequest
         {
             Statistics = new List<StatisticUpdate>
-            { 
+            {
                 new StatisticUpdate
                 {
                     StatisticName = "global",
+                    Value = currentScore
+                },
+                new StatisticUpdate
+                {
+                    StatisticName = "weeklyLeaderboard",
                     Value = currentScore
                 }
             }

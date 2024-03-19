@@ -27,9 +27,9 @@ public class OptionsController : MonoBehaviour
     {
         optionsData = OptionsData.GetData();
 
-        volumeSlider.value = optionsData.Volume;
-        cameraSlider.value = optionsData.CameraShake;
-        txtDisplayName.text = Login.displayName;
+        volumeSlider.onValueChanged.AddListener(VolumeChange);
+        cameraSlider.onValueChanged.AddListener(CameraChange);
+        btnClose.onClick.AddListener(BtnCloseClick);
 
         for (int i = 0; i < qualityToggles.Count; i++)
         {
@@ -38,9 +38,10 @@ public class OptionsController : MonoBehaviour
             qualityToggles[i].onValueChanged.AddListener(value => QualityChange(index, value));
         }
 
-        volumeSlider.onValueChanged.AddListener(VolumeChange);
-        cameraSlider.onValueChanged.AddListener(CameraChange);
-        btnClose.onClick.AddListener(BtnCloseClick);        
+        volumeSlider.value = optionsData.Volume;
+        cameraSlider.value = optionsData.CameraShake;
+        txtDisplayName.text = Login.displayName;
+
     }
 
     private void BtnCloseClick()
